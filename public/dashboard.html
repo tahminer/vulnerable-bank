@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - Vulnerable Bank</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card p-4 shadow">
+      <h2 class="text-center mb-4">🏦 Welcome to Your Dashboard</h2>
+      <div id="userInfo" class="text-center mb-4">
+        <p><strong>First Name:</strong> <span id="firstName"></span></p>
+        <p><strong>Last Name:</strong> <span id="lastName"></span></p>
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Balance:</strong> $<span id="balance"></span></p>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      window.location = "login.html";
+    }
+
+    fetch('/api/user/info', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Unauthorized");
+      return res.json();
+    })
+    .then(data => {
+      document.getElementById('firstName').textContent = data.firstName;
+      document.getElementById('lastName').textContent = data.lastName;
+      document.getElementById('username').textContent = data.username;
+      document.getElementById('balance').textContent = data.balance;
+    })
+    .catch(() => {
+      alert("Session expired or unauthorized");
+      logout();
+    });
+
+    function logout() {
+      localStorage.removeItem('token');
+      window.location = "login.html";
+    }
+  </script>
+</body>
+</html>

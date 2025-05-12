@@ -1,0 +1,3 @@
+id,firstName,lastName,username,passwordHash,role,balance,end
+074b2979-71af-49d7-b509-3650c5463ab9,Tahm,mine,tahmine,$2b$10$4pVN5lTHV9WreXF66NlNfOKdiTAwh4OKBFDPZ3En5OkEBVDqFke3a,user,50,
+ec850021-7ac0-4f87-8fa4-9244b82101db,God,Father,administrator,$2b$10$.62c8gy3/AW6PD7Hh1z4AOhocsjTiZs7xDvM4ggoxN0OZtDkFtTqi,admin,50,

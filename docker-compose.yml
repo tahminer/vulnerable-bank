@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - PORT=3000
+      - JWT_SECRET=bank123
