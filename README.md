@@ -34,58 +34,70 @@ project-root/
 │   └── app.js          # Main app setup and route integration
 ├── server.js           # App entry point and server bootstrap
 ├── .env                # Environment variables (e.g., PORT, JWT_SECRET)
+├── Dockerfile
+├── docker-compose.yml
 ├── package.json        # Dependencies and scripts
 ```
 
 ---
 
 ## 🚀 How to Run the Project
+Clone the repository:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/vulnerable-bank.git
+   cd vulnerable-bank
+   ```
+### 🐳 Option 1: Using Docker (Recommended)
 
-### 1. Clone the Repository
+> 🔸 If you're on **Windows**, first open **Docker Desktop**.
 
-```bash
-git clone https://github.com/<your-username>/vulnerable-bank.git
-cd vulnerable-bank
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-
-Create a `.env` file in the root directory:
-
-```
-PORT=5000
-JWT_SECRET=your_weak_secret
-```
-
-### 4. Start the Application
+Then run:
 
 ```bash
-node server.js
+docker-compose up --build
 ```
 
-App will be running at:  
+The application will be available at:  
 **http://localhost:5000**
+
+---
+
+### 🖥️ Option 2: Running Locally Without Docker
+
+1. Make sure you have **Node.js** and **npm** installed
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file and set the following:
+   ```
+   PORT=5000
+   JWT_SECRET=your_weak_secret_key
+   ```
+4. Start the app:
+   ```bash
+   node server.js
+   ```
+
+Then visit:  
+http://localhost:PORT
 
 ---
 
 ## 🧪 Lab Workflow (How to Attack)
 
-1. **Fuzz for Hidden Login API**
-   - Use `ffuf` to discover `/api/auth/login`
-2. **Obtain JWT**
-   - Login and extract the JWT from response
-3. **Crack Weak Secret**
-   - Use `hashcat` with mode `16500` on the JWT to find the signing key
-4. **Forge Admin Token**
-   - Modify token payload to change role to `"admin"` and re-sign
-5. **Fuzz Admin Endpoints**
-   - Use `ffuf` again with `Authorization: Bearer <forged_token>` to find sensitive endpoints
+1. **Obtain JWT**  
+   - Use Burp's repeater or proxy to login and capture the **JWT token** from the response
+
+2. **Crack Weak Secret**  
+   - Use `hashcat` with mode `16500` on the JWT to find the signing key (brute-force dictionary attack)
+
+3. **Forge Admin Token**  
+   - Modify the payload (`"role": "admin"`) and re-sign using the cracked secret key
+
+4. **Find Admin Endpoints**  
+   - Use `ffuf` or Burp with the **forged JWT token** in `Authorization: Bearer ...` header  
+   - Discover admin-only routes and extract sensitive data or flags
 
 ---
 
@@ -95,15 +107,6 @@ App will be running at:
 - Always validate roles on the server (not just client JWT)  
 - Hide and protect API routes using proper access control  
 - Don’t expose sensitive endpoints without authentication  
-
----
-
-## 📄 Report Includes
-
-- Vulnerability Mapping  
-- Exploitation Steps  
-- Remediation Tips  
-- Persian Documentation (for course/lab submission)  
 
 ---
 
