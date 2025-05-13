@@ -1,4 +1,4 @@
-# 💸 Vulnerable Bank App (JWT Security Lab)
+# 💸 Vulnerable Bank App 
 
 A deliberately insecure Node.js and Express-based banking web application built for educational purposes, especially for practicing web application security, JWT attacks, and hidden API discovery.
 
