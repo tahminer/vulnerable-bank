@@ -44,7 +44,7 @@ project-root/
 ## 🚀 How to Run the Project
 Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/vulnerable-bank.git
+   git clone https://github.com/tahminer/vulnerable-bank.git
    cd vulnerable-bank
    ```
 ### 🐳 Option 1: Using Docker (Recommended)
